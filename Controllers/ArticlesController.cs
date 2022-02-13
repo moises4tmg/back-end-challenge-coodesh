@@ -49,10 +49,9 @@ public class ArticlesController : ControllerBase
             .Articles
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
-        if(article != null)
-            return Ok(article);
-        else
+        if(article == null)
             return NotFound();
+        return Ok(article);
     }
 
     // [POST] /articles/
@@ -62,12 +61,9 @@ public class ArticlesController : ControllerBase
     {
         if(!ModelState.IsValid)
             return BadRequest("Invadid data");
-        try{
-            _context.Articles.Add(article);
-            await _context.SaveChangesAsync();
-        }catch(Exception error){
-            return StatusCode(StatusCodes.Status500InternalServerError, error);
-        }
+        
+        _context.Articles.Add(article);
+        await _context.SaveChangesAsync();
 
         return CreatedAtAction(
             nameof(getArticle),
@@ -85,12 +81,11 @@ public class ArticlesController : ControllerBase
             return BadRequest("Invalid data");
         if(await _context.Articles.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id) == null)
             return NotFound();
-        try{
-            _context.Entry(article).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }catch (Exception error){
-            return StatusCode(StatusCodes.Status500InternalServerError, error);
-        }
+
+        _context.ChangeTracker.Clear();
+        _context.Entry(article).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+
         return NoContent();
     }
 
@@ -99,14 +94,13 @@ public class ArticlesController : ControllerBase
     [Route("[controller]/{id}")]
     public async Task<IActionResult> deleteArticle(int id){
         var article = await _context.Articles.FindAsync(id);
+
         if(article == null)
             return NotFound();
-        try{
-            _context.Articles.Remove(article);
-            await _context.SaveChangesAsync();
-        }catch(Exception error){
-            return StatusCode(StatusCodes.Status500InternalServerError, error);
-        }
+        
+        _context.Articles.Remove(article);
+        await _context.SaveChangesAsync();
+
         return NoContent();
     }
     

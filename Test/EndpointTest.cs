@@ -35,7 +35,7 @@ public class EndpointTest
         return databaseContext;
     }
 
-    // Endpint: [GET] /
+    // Endpoint: [GET] /
     [Fact] 
     public async Task Index_ShouldReturnOk()
     {
@@ -50,7 +50,7 @@ public class EndpointTest
         Assert.IsType<OkObjectResult>(result);
     }
 
-    // Endpint: [GET] /articles/ 
+    // Endpoint: [GET] /articles/ 
     [Fact] 
     public async Task getArticles_ShouldReturnOk()
     {
@@ -65,7 +65,7 @@ public class EndpointTest
         Assert.IsType<OkObjectResult>(result);
     }
 
-    // Endpint: [GET] /articles/ 
+    // Endpoint: [GET] /articles/ 
     // trying to take 101 items on page 1, the max allowed is 100 items per request
     [Fact] 
     public async Task getArticles_ShouldReturnBadRequest()
@@ -83,7 +83,7 @@ public class EndpointTest
         Assert.IsType<BadRequestObjectResult>(result);
     }
 
-    // Endpint: [GET] /articles/{id} 
+    // Endpoint: [GET] /articles/{id} 
     [Fact] 
     public async Task getArticle_ShouldReturnOk()
     {
@@ -99,7 +99,7 @@ public class EndpointTest
         Assert.IsType<OkObjectResult>(result);
     }
 
-    // Endpint: [GET] /articles/{id} 
+    // Endpoint: [GET] /articles/{id} 
     // tring to get an article that does not exist
     [Fact] 
     public async Task getArticle_ShouldReturnNotFound()
@@ -116,7 +116,7 @@ public class EndpointTest
         Assert.IsType<NotFoundResult>(result);
     }    
 
-    // Endpint: [POST] /articles/
+    // Endpoint: [POST] /articles/
     [Fact] 
     public async Task postArticle_ShouldReturnCreatedAtAction()
     {
@@ -141,7 +141,7 @@ public class EndpointTest
         Assert.IsType<CreatedAtActionResult>(result);
     }  
 
-    // Endpint: [PUT] /articles/{id}
+    // Endpoint: [PUT] /articles/{id}
     // tries to update an article
     [Fact] 
     public async Task putArticle_ShouldReturnNoContentResult()
@@ -151,7 +151,7 @@ public class EndpointTest
         ArticlesController controller = new ArticlesController(dbcontext);
         Article articleToBePosted = new Article()
         {
-            Id = 2,
+            Id = 1,
             Featured = false,
             Title = "PUT TEST",
             Url = "https://fortestingpurposes.com/puttestpage",
@@ -160,16 +160,16 @@ public class EndpointTest
             Sumary = "",
             PublishedAt = DateTime.UtcNow
         };
-        int id = 2;
+        int id = 1;
         
         // Act
         var result = await controller.putArticle(id, articleToBePosted);
-        
+
         // Assert
-        Assert.IsType<ObjectResult>(result);
+        Assert.IsType<NoContentResult>(result);
     }  
 
-    // Endpint: [PUT] /articles/{id}
+    // Endpoint: [PUT] /articles/{id}
     // tries to update an invadid article
     [Fact] 
     public async Task putArticle_ShouldReturnBadRequestObjectResult()
@@ -197,7 +197,7 @@ public class EndpointTest
         Assert.IsType<BadRequestObjectResult>(result);
     }  
 
-    // Endpint: [PUT] /articles/{id}
+    // Endpoint: [PUT] /articles/{id}
     // tries to update an invadid article
     [Fact] 
     public async Task putArticle_ShouldReturnNotFoundObjectResult()
@@ -225,7 +225,7 @@ public class EndpointTest
         Assert.IsType<NotFoundResult>(result);
     }  
 
-    // Endpint: [DELETE] /articles/{id}
+    // Endpoint: [DELETE] /articles/{id}
     // tries to delete an article
     [Fact] 
     public async Task deleteArticle_ShouldReturnNoContentResult()
@@ -242,7 +242,7 @@ public class EndpointTest
         Assert.IsType<NoContentResult>(result);
     }  
 
-    // Endpint: [DELETE] /articles/{id}
+    // Endpoint: [DELETE] /articles/{id}
     // tries to delete an article that does not exist
     [Fact] 
     public async Task deleteArticle_ShouldReturnNotFoundResult()
