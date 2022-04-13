@@ -1,7 +1,6 @@
 # Back-end Challenge - Space Flight News
 
-This is a challenge by [Coodesh](https://coodesh.com/). 
-[Presentation Link](https://www.loom.com/embed/0e7409a78fd045849601117556cacc77)
+This is a challenge by [Coodesh](https://coodesh.com/).
 
 This is a simple ASP .NET Web API challenge that uses some of the data from the [Space Flight News](https://api.spaceflightnewsapi.net/v3/documentation) project.
 
